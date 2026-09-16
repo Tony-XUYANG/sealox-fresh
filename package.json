@@ -1,0 +1,34 @@
+{
+  "name": "helios",
+  "version": "0.8.3",
+  "private": true,
+  "description": "Deploy to Sealos — agent-first.",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "node apps/desktop/scripts/dev-desktop.mjs",
+    "dev:eve": "npm run dev -w eve",
+    "ios": "npm run ios -w @helios/mobile",
+    "build:backend": "npm run build -w @helios/desktop-backend",
+    "typecheck": "npm run typecheck -w @helios/desktop-backend && npm run typecheck -w eve && npm run typecheck -w @helios/mobile",
+    "typecheck:flutter": "cd apps/desktop && flutter analyze",
+    "test:desktop": "npm run build:backend && node --test apps/desktop/scripts/*.test.mjs && npm test -w eve && npm test -w @helios/desktop-backend && cd apps/desktop && flutter test",
+    "build:mac": "node apps/desktop/scripts/build-desktop.mjs macos",
+    "build:win": "node apps/desktop/scripts/build-desktop.mjs windows",
+    "publish:mac": "node apps/desktop/scripts/publish-mac.mjs"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "overrides": {
+    "ai": "^7.0.58"
+  },
+  "optionalDependencies": {
+    "@esbuild/darwin-x64": "0.25.12",
+    "@esbuild/win32-x64": "0.25.12",
+    "@rolldown/binding-darwin-arm64": "1.2.4",
+    "@rolldown/binding-darwin-x64": "1.2.4",
+    "@rolldown/binding-win32-x64-msvc": "1.2.4"
+  }
+}
